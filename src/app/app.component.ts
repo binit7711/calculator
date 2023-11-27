@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Button, buttons } from './buttons';
 
 @Component({
@@ -11,7 +11,68 @@ export class AppComponent {
   expression: Button[] = [];
   title = 'calculator';
   firstOperand = '';
-  secondOperand = '';
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case '=':
+        this.handleButtonClick({
+          function: 'equal',
+          label: '=',
+        });
+        break;
+
+      case '*':
+        this.handleButtonClick({
+          label: '*',
+          function: 'operation',
+          operation: (a, b) => {
+            return parseFloat(a) * parseFloat(b);
+          },
+        });
+        break;
+
+      case '+':
+        this.handleButtonClick({
+          label: '+',
+          function: 'operation',
+          operation: (a, b) => {
+            return parseFloat(a) + parseFloat(b);
+          },
+        });
+        break;
+
+      case '-':
+        this.handleButtonClick({
+          label: '-',
+          function: 'operation',
+          operation: (a, b) => {
+            return parseFloat(a) - parseFloat(b);
+          },
+        });
+        break;
+
+      case '/':
+        this.handleButtonClick({
+          label: '/',
+          operation: (a, b) => {
+            return parseFloat(a) / parseFloat(b);
+          },
+          function: 'operation',
+        });
+        break;
+
+      default:
+        var digitRegex = /[0-9]/;
+        if (digitRegex.test(event.key)) {
+          this.handleButtonClick({
+            label: event.key,
+            function: 'number',
+          });
+        }
+    }
+  }
+
   handleButtonClick(button: Button) {
     switch (button.function) {
       case 'number':
@@ -71,20 +132,18 @@ export class AppComponent {
   }
 
   calculate() {
-    const multiplyDivideIndex = this.expression.findIndex(
-      (value) => value.label == '*' || value.label == '/'
+    const multiply = this.expression.findIndex((value) => value.label === '*');
+    const divide = this.expression.findIndex((value) => value.label === '/');
+    const addSubtract = this.expression.findIndex(
+      (value) => value.label === '-' || value.label === '+'
     );
 
-    if (multiplyDivideIndex !== -1) {
-      this.doCalculation(multiplyDivideIndex);
-    } else {
-      const addSubtractIndex = this.expression.findIndex(
-        (value) => value.label === '-' || value.label === '+'
-      );
-
-      if (addSubtractIndex !== -1) {
-        this.doCalculation(addSubtractIndex);
-      }
+    if (divide !== -1) {
+      this.doCalculation(divide);
+    } else if (multiply !== -1) {
+      this.doCalculation(multiply);
+    } else if (addSubtract !== -1) {
+      this.doCalculation(addSubtract);
     }
   }
 
