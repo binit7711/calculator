@@ -1,5 +1,34 @@
 export const buttons: Button[] = [
   {
+    label: '+',
+    function: 'operation',
+    operation: (a: string, b: string) => {
+      return parseFloat(a) + parseFloat(b);
+    },
+  },
+  {
+    label: '-',
+    function: 'operation',
+    operation: (a: string, b: string) => {
+      return parseFloat(a) - parseFloat(b);
+    },
+  },
+
+  {
+    label: '*',
+    function: 'operation',
+    operation: (a, b) => {
+      return parseFloat(a) * parseFloat(b);
+    },
+  },
+  {
+    label: '/',
+    function: 'operation',
+    operation: (a: string, b: string) => {
+      return parseFloat(a) / parseFloat(b);
+    },
+  },
+  {
     label: '9',
     function: 'number',
   },
@@ -12,12 +41,10 @@ export const buttons: Button[] = [
     function: 'number',
   },
   {
-    label: '+',
-    function: 'operation',
-    operation: (a: string, b: string) => {
-      return parseFloat(a) + parseFloat(b);
-    },
+    label: 'C',
+    function: 'clear',
   },
+
   {
     label: '6',
     function: 'number',
@@ -34,13 +61,9 @@ export const buttons: Button[] = [
   },
 
   {
-    label: '-',
-    function: 'operation',
-    operation: (a: string, b: string) => {
-      return parseFloat(a) - parseFloat(b);
-    },
+    label: '=',
+    function: 'equal',
   },
-
   {
     label: '3',
     function: 'number',
@@ -57,35 +80,10 @@ export const buttons: Button[] = [
   },
 
   {
-    label: '*',
-    function: 'operation',
-    operation: (a, b) => {
-      return parseFloat(a) * parseFloat(b);
-    },
-  },
-
-  {
     label: '0',
     function: 'number',
   },
 
-  {
-    label: 'C',
-    function: 'clear',
-  },
-
-  {
-    label: '=',
-    function: 'equal',
-  },
-
-  {
-    label: '/',
-    function: 'operation',
-    operation: (a: string, b: string) => {
-      return parseFloat(a) / parseFloat(b);
-    },
-  },
   { label: '.', function: 'decimal' },
   { label: 'Delete', function: 'delete' },
 ];
